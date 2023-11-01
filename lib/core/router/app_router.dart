@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:orion_tek_challenge/presentation/blocs/home_bloc/home_bloc.dart';
 import 'package:orion_tek_challenge/presentation/screens/add_company_screen.dart';
+import 'package:orion_tek_challenge/service_locator.dart';
 
 import '../../presentation/screens/home_screen.dart';
 
@@ -14,7 +17,10 @@ class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case HomeScreen.routeName:
-        return _buildPage(const HomeScreen());
+        return _buildPage(BlocProvider.value(
+          value: sl<HomeBloc>()..add(const LoadCompanies()),
+          child: const HomeScreen(),
+        ));
       case AddCompanyScreen.routeName:
         return _buildPage(const AddCompanyScreen());
       default:

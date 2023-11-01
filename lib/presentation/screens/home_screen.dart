@@ -1,8 +1,11 @@
 import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orion_tek_challenge/core/constants/strings.dart';
 import 'package:orion_tek_challenge/core/services/local_storage/database/app_database.dart';
+import 'package:orion_tek_challenge/presentation/blocs/home_bloc/home_bloc.dart';
 import 'package:orion_tek_challenge/presentation/screens/add_company_screen.dart';
+import 'package:orion_tek_challenge/presentation/widgets/company_card.dart';
 import 'package:orion_tek_challenge/service_locator.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,26 +15,21 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text(Strings.companies)),
-      body: ListView(
-        children: [
-          const CompanyCard(
-              name: Strings.appName,
-              logo:
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtH6ctIDoPfhmlQreh9wC8fy65XzroD6O5Xg&usqp=CAU"),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
-            child: ElevatedButton(
-              onPressed: () async {
-                // final companiesDao = sl<CompaniesDao>();
-                // await companiesDao.insertCompany(const CompaniesCompanion(
-                //   name: drift.Value("Male"),
-                // ));
-                Navigator.pushNamed(context, AddCompanyScreen.routeName);
-              },
-              child: const Text('test'),
-            ),
-          ),
-        ],
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is HomeSuccess) {
+            return _Body(state.companies);
+          } else if (state is HomeFailure) {
+            return Center(
+              child: Text(
+                state.message,
+                style: const TextStyle(color: Colors.red),
+              ),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(
@@ -43,50 +41,71 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class CompanyCard extends StatelessWidget {
-  final String name;
-  final String logo;
-  final void Function()? onTap;
-
-  const CompanyCard({
-    super.key,
-    required this.name,
-    required this.logo,
-    this.onTap,
-  });
+class _Body extends StatelessWidget {
+  final List<Company> companies;
+  const _Body(this.companies);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      margin: const EdgeInsets.all(16),
-      child: InkWell(
-        onTap: onTap,
-        child: Column(
-          children: <Widget>[
-            Image.network(
-              logo,
-              width: double.infinity,
-              height: 150,
-              fit: BoxFit.fill,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                ],
+    return Builder(builder: (context) {
+      if (companies.isEmpty) {
+        return const _NoCompaniesWidget();
+      } else {
+        return ListView(
+          children: [
+            ...companies.map(
+              (company) => CompanyCard(
+                name: company.name,
+                logo: company.logo ??
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtH6ctIDoPfhmlQreh9wC8fy65XzroD6O5Xg&usqp=CAU",
               ),
-            ),
+            )
           ],
+        );
+      }
+    });
+  }
+}
+
+class _NoCompaniesWidget extends StatelessWidget {
+  const _NoCompaniesWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: Icon(
+                  Icons.theater_comedy_sharp,
+                  size: 50,
+                ),
+              ),
+              const Text(
+                'Usted no tiene empresa registrada',
+                style: TextStyle(fontSize: 16),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0)
+                    .copyWith(top: 30),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    // final companiesDao = sl<CompaniesDao>();
+                    // await companiesDao.insertCompany(const CompaniesCompanion(
+                    //   name: drift.Value("Male"),
+                    // ));
+                    Navigator.pushNamed(context, AddCompanyScreen.routeName);
+                  },
+                  child: const Text('Agregar empresa'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
