@@ -19,7 +19,7 @@ class CompaniesDao extends DatabaseAccessor<AppDatabase>
   final AppDatabase db;
 
   Future<List<Company>> getCompanies() => select(companies).get();
-  Future insertCompany(Insertable<Company> company) =>
+  Future<int> insertCompany(Insertable<Company> company) =>
       into(companies).insert(company);
 
   CompaniesDao(this.db) : super(db);

@@ -1,10 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:orion_tek_challenge/core/errors/app_failure.dart';
-import 'package:orion_tek_challenge/data/models/company_model.dart';
+import 'package:orion_tek_challenge/core/services/local_storage/database/app_database.dart';
 
 abstract class CompanyRepository {
-  Future<Either<AppFailure, List<CompanyModel>>> loadCompanies();
-  Future<Either<AppFailure, CompanyModel>> createCompany(String name);
-  Future<Either<AppFailure, void>> updateCompany(CompanyModel company);
-  Future<Either<AppFailure, void>> deleteCompany(String id);
+  Future<Either<AppFailure, List<Company>>> loadCompanies();
+  Future<Either<AppFailure, void>> createCompany(String name);
 }
