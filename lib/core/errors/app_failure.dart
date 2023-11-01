@@ -9,6 +9,7 @@ class AppFailure with _$AppFailure implements Exception {
   // Common
   const factory AppFailure.cache() = CacheFailure;
   const factory AppFailure.unexpected() = UnexpectedFailure;
+  const factory AppFailure.nameDuplication() = NameDuplicationFailure;
 }
 
 extension AppExceptionMessages on AppFailure {
@@ -16,6 +17,7 @@ extension AppExceptionMessages on AppFailure {
     return maybeWhen(
       orElse: () => Strings.unexpectedFailure,
       cache: () => Strings.unexpectedFailure,
+      nameDuplication: () => Strings.nameDuplicationFailure,
     );
   }
 }

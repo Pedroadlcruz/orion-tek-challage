@@ -20,18 +20,21 @@ mixin _$AppFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() cache,
     required TResult Function() unexpected,
+    required TResult Function() nameDuplication,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? cache,
     TResult? Function()? unexpected,
+    TResult? Function()? nameDuplication,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? cache,
     TResult Function()? unexpected,
+    TResult Function()? nameDuplication,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$AppFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(CacheFailure value) cache,
     required TResult Function(UnexpectedFailure value) unexpected,
+    required TResult Function(NameDuplicationFailure value) nameDuplication,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CacheFailure value)? cache,
     TResult? Function(UnexpectedFailure value)? unexpected,
+    TResult? Function(NameDuplicationFailure value)? nameDuplication,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CacheFailure value)? cache,
     TResult Function(UnexpectedFailure value)? unexpected,
+    TResult Function(NameDuplicationFailure value)? nameDuplication,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +120,7 @@ class _$CacheFailureImpl implements CacheFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() cache,
     required TResult Function() unexpected,
+    required TResult Function() nameDuplication,
   }) {
     return cache();
   }
@@ -123,6 +130,7 @@ class _$CacheFailureImpl implements CacheFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? cache,
     TResult? Function()? unexpected,
+    TResult? Function()? nameDuplication,
   }) {
     return cache?.call();
   }
@@ -132,6 +140,7 @@ class _$CacheFailureImpl implements CacheFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? cache,
     TResult Function()? unexpected,
+    TResult Function()? nameDuplication,
     required TResult orElse(),
   }) {
     if (cache != null) {
@@ -145,6 +154,7 @@ class _$CacheFailureImpl implements CacheFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(CacheFailure value) cache,
     required TResult Function(UnexpectedFailure value) unexpected,
+    required TResult Function(NameDuplicationFailure value) nameDuplication,
   }) {
     return cache(this);
   }
@@ -154,6 +164,7 @@ class _$CacheFailureImpl implements CacheFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CacheFailure value)? cache,
     TResult? Function(UnexpectedFailure value)? unexpected,
+    TResult? Function(NameDuplicationFailure value)? nameDuplication,
   }) {
     return cache?.call(this);
   }
@@ -163,6 +174,7 @@ class _$CacheFailureImpl implements CacheFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CacheFailure value)? cache,
     TResult Function(UnexpectedFailure value)? unexpected,
+    TResult Function(NameDuplicationFailure value)? nameDuplication,
     required TResult orElse(),
   }) {
     if (cache != null) {
@@ -216,6 +228,7 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() cache,
     required TResult Function() unexpected,
+    required TResult Function() nameDuplication,
   }) {
     return unexpected();
   }
@@ -225,6 +238,7 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? cache,
     TResult? Function()? unexpected,
+    TResult? Function()? nameDuplication,
   }) {
     return unexpected?.call();
   }
@@ -234,6 +248,7 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? cache,
     TResult Function()? unexpected,
+    TResult Function()? nameDuplication,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -247,6 +262,7 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(CacheFailure value) cache,
     required TResult Function(UnexpectedFailure value) unexpected,
+    required TResult Function(NameDuplicationFailure value) nameDuplication,
   }) {
     return unexpected(this);
   }
@@ -256,6 +272,7 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CacheFailure value)? cache,
     TResult? Function(UnexpectedFailure value)? unexpected,
+    TResult? Function(NameDuplicationFailure value)? nameDuplication,
   }) {
     return unexpected?.call(this);
   }
@@ -265,6 +282,7 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CacheFailure value)? cache,
     TResult Function(UnexpectedFailure value)? unexpected,
+    TResult Function(NameDuplicationFailure value)? nameDuplication,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -276,4 +294,115 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
 
 abstract class UnexpectedFailure implements AppFailure {
   const factory UnexpectedFailure() = _$UnexpectedFailureImpl;
+}
+
+/// @nodoc
+abstract class _$$NameDuplicationFailureImplCopyWith<$Res> {
+  factory _$$NameDuplicationFailureImplCopyWith(
+          _$NameDuplicationFailureImpl value,
+          $Res Function(_$NameDuplicationFailureImpl) then) =
+      __$$NameDuplicationFailureImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$NameDuplicationFailureImplCopyWithImpl<$Res>
+    extends _$AppFailureCopyWithImpl<$Res, _$NameDuplicationFailureImpl>
+    implements _$$NameDuplicationFailureImplCopyWith<$Res> {
+  __$$NameDuplicationFailureImplCopyWithImpl(
+      _$NameDuplicationFailureImpl _value,
+      $Res Function(_$NameDuplicationFailureImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$NameDuplicationFailureImpl implements NameDuplicationFailure {
+  const _$NameDuplicationFailureImpl();
+
+  @override
+  String toString() {
+    return 'AppFailure.nameDuplication()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NameDuplicationFailureImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() cache,
+    required TResult Function() unexpected,
+    required TResult Function() nameDuplication,
+  }) {
+    return nameDuplication();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? cache,
+    TResult? Function()? unexpected,
+    TResult? Function()? nameDuplication,
+  }) {
+    return nameDuplication?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? cache,
+    TResult Function()? unexpected,
+    TResult Function()? nameDuplication,
+    required TResult orElse(),
+  }) {
+    if (nameDuplication != null) {
+      return nameDuplication();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CacheFailure value) cache,
+    required TResult Function(UnexpectedFailure value) unexpected,
+    required TResult Function(NameDuplicationFailure value) nameDuplication,
+  }) {
+    return nameDuplication(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CacheFailure value)? cache,
+    TResult? Function(UnexpectedFailure value)? unexpected,
+    TResult? Function(NameDuplicationFailure value)? nameDuplication,
+  }) {
+    return nameDuplication?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CacheFailure value)? cache,
+    TResult Function(UnexpectedFailure value)? unexpected,
+    TResult Function(NameDuplicationFailure value)? nameDuplication,
+    required TResult orElse(),
+  }) {
+    if (nameDuplication != null) {
+      return nameDuplication(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NameDuplicationFailure implements AppFailure {
+  const factory NameDuplicationFailure() = _$NameDuplicationFailureImpl;
 }

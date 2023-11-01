@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
+import 'package:drift/isolate.dart';
 import 'package:orion_tek_challenge/core/errors/app_failure.dart';
 import 'package:orion_tek_challenge/core/services/local_storage/database/app_database.dart';
 import 'package:orion_tek_challenge/core/services/local_storage/database/tables/companies.dart';
@@ -22,7 +23,9 @@ class FakeCompaniesRepository implements CompanyRepository {
       print(resp);
       // ignore: void_checks
       return const Right(Void);
-    } on Exception {
+    } on DriftRemoteException catch (_) {
+      return const Left(AppFailure.nameDuplication());
+    } on Exception catch (_) {
       return const Left(AppFailure.unexpected());
     }
   }
