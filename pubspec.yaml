@@ -16,7 +16,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   # Cache Service
   shared_preferences: ^2.2.2
-
+  # Functional programing 
+  dartz: 0.10.1
   # Data Serialization
   freezed_annotation: ^2.4.1
 
