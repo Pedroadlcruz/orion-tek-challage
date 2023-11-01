@@ -18,8 +18,8 @@ class CompaniesDao extends DatabaseAccessor<AppDatabase>
     with _$CompaniesDaoMixin {
   final AppDatabase db;
 
-  Future<List<Company>> getGenders() => select(companies).get();
-  Future insertGender(Insertable<Company> company) =>
+  Future<List<Company>> getCompanies() => select(companies).get();
+  Future insertCompany(Insertable<Company> company) =>
       into(companies).insert(company);
 
   CompaniesDao(this.db) : super(db);

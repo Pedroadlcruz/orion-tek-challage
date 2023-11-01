@@ -1,5 +1,10 @@
+import 'package:drift/drift.dart' as drift;
+import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:orion_tek_challenge/core/constants/strings.dart';
+import 'package:orion_tek_challenge/core/services/local_storage/database/app_database.dart';
+import 'package:orion_tek_challenge/core/services/local_storage/database/tables/companies.dart';
+import 'package:orion_tek_challenge/service_locator.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,12 +14,30 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text(Strings.companies)),
       body: ListView(
-        children: const [
-          CompanyCard(
+        children: [
+          const CompanyCard(
               name: Strings.appName,
               logo:
                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtH6ctIDoPfhmlQreh9wC8fy65XzroD6O5Xg&usqp=CAU"),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            child: ElevatedButton(
+              onPressed: () async {
+                final companiesDao = sl<CompaniesDao>();
+                await companiesDao.insertCompany(const CompaniesCompanion(
+                  name: drift.Value("Male"),
+                ));
+              },
+              child: const Text('test'),
+            ),
+          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DriftDbViewer(sl<AppDatabase>()))),
+        tooltip: 'Increment',
+        child: const Icon(Icons.dashboard),
       ),
     );
   }

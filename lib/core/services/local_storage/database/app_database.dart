@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [Companies])
+@DriftDatabase(tables: [Companies], daos: [CompaniesDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
