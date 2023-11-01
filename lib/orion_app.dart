@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:orion_tek_challenge/core/router/app_router.dart';
+
+import 'core/constants/strings.dart';
 
 class OrionApp extends StatelessWidget {
   const OrionApp({super.key});
@@ -6,11 +9,9 @@ class OrionApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: "Orion App",
+      title: Strings.appName,
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(child: Text('Orion App')),
-      ),
+      onGenerateRoute: AppRouter.generateRoute,
     );
   }
 }
