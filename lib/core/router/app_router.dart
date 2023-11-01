@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:orion_tek_challenge/presentation/blocs/add_company/add_company_bloc.dart';
 import 'package:orion_tek_challenge/presentation/blocs/home_bloc/home_bloc.dart';
 import 'package:orion_tek_challenge/presentation/screens/add_company_screen.dart';
 import 'package:orion_tek_challenge/service_locator.dart';
@@ -22,7 +23,10 @@ class AppRouter {
           child: const HomeScreen(),
         ));
       case AddCompanyScreen.routeName:
-        return _buildPage(const AddCompanyScreen());
+        return _buildPage(BlocProvider.value(
+          value: sl<AddCompanyBloc>(),
+          child: const AddCompanyScreen(),
+        ));
       default:
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) => Scaffold(

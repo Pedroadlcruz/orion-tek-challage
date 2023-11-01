@@ -295,6 +295,7 @@ class CompaniesCompanion extends UpdateCompanion<Company> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   late final $CompaniesTable companies = $CompaniesTable(this);
+  late final CompaniesDao companiesDao = CompaniesDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();

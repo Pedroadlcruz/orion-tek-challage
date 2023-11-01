@@ -59,7 +59,17 @@ class _Body extends StatelessWidget {
                 logo: company.logo ??
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtH6ctIDoPfhmlQreh9wC8fy65XzroD6O5Xg&usqp=CAU",
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0)
+                  .copyWith(top: 30, bottom: 80),
+              child: ElevatedButton(
+                onPressed: () async {
+                  Navigator.pushNamed(context, AddCompanyScreen.routeName);
+                },
+                child: const Text('Agregar empresa'),
+              ),
+            ),
           ],
         );
       }
