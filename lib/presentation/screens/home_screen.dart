@@ -1,9 +1,8 @@
-import 'package:drift/drift.dart' as drift;
 import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:orion_tek_challenge/core/constants/strings.dart';
 import 'package:orion_tek_challenge/core/services/local_storage/database/app_database.dart';
-import 'package:orion_tek_challenge/core/services/local_storage/database/tables/companies.dart';
+import 'package:orion_tek_challenge/presentation/screens/add_company_screen.dart';
 import 'package:orion_tek_challenge/service_locator.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,10 +22,11 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
             child: ElevatedButton(
               onPressed: () async {
-                final companiesDao = sl<CompaniesDao>();
-                await companiesDao.insertCompany(const CompaniesCompanion(
-                  name: drift.Value("Male"),
-                ));
+                // final companiesDao = sl<CompaniesDao>();
+                // await companiesDao.insertCompany(const CompaniesCompanion(
+                //   name: drift.Value("Male"),
+                // ));
+                Navigator.pushNamed(context, AddCompanyScreen.routeName);
               },
               child: const Text('test'),
             ),

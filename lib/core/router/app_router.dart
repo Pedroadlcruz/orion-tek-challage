@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:orion_tek_challenge/presentation/screens/add_company_screen.dart';
 
 import '../../presentation/screens/home_screen.dart';
 
@@ -14,6 +15,8 @@ class AppRouter {
     switch (settings.name) {
       case HomeScreen.routeName:
         return _buildPage(const HomeScreen());
+      case AddCompanyScreen.routeName:
+        return _buildPage(const AddCompanyScreen());
       default:
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) => Scaffold(
