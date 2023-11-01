@@ -16,14 +16,25 @@ dependencies:
   cupertino_icons: ^1.0.2
   # Cache Service
   shared_preferences: ^2.2.2
+  #Dependenci Injection
+  get_it: ^7.6.4
+   # Local database
+  drift: ^2.13.0
+  sqlite3_flutter_libs: ^0.5.0
+  path_provider: ^2.0.0
+  path: ^1.8.3
+
+  drift_db_viewer: 2.0.0 
   # Functional programing 
   dartz: 0.10.1
   # Data Serialization
   freezed_annotation: ^2.4.1
-
+  # Utils
+  uuid: ^4.1.0
 dev_dependencies:
   build_runner: ^2.4.6
   freezed: 2.4.5
+  drift_dev: ^2.13.1
   flutter_test:
     sdk: flutter
 
