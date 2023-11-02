@@ -5,6 +5,7 @@ import 'package:orion_tek_challenge/core/services/local_storage/database/tables/
 import 'package:orion_tek_challenge/core/services/local_storage/database/tables/companies.dart';
 import 'package:orion_tek_challenge/data/repository/fake_company_repository.dart';
 import 'package:orion_tek_challenge/domain/company_repository.dart';
+import 'package:orion_tek_challenge/presentation/blocs/add_client/add_client_bloc.dart';
 import 'package:orion_tek_challenge/presentation/blocs/add_company_bloc/add_company_bloc.dart';
 import 'package:orion_tek_challenge/presentation/blocs/company_detail/company_detail_bloc.dart';
 import 'package:orion_tek_challenge/presentation/blocs/home_bloc/home_bloc.dart';
@@ -19,6 +20,7 @@ Future<void> setUpServiceLocator() async {
   sl.registerFactory(() => HomeBloc(companiesRepository: sl()));
   sl.registerFactory(() => AddCompanyBloc(companiesRepository: sl()));
   sl.registerFactory(() => CompanyDetailBloc(companiesRepository: sl()));
+  sl.registerFactory(() => AddClientBloc(companiesRepository: sl()));
 
   //! Repositories
 
