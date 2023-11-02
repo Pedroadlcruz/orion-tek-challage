@@ -58,8 +58,17 @@ class _Body extends StatelessWidget {
       ),
       child: ListView(
         children: [
+          const Padding(
+            padding: EdgeInsets.only(bottom: 16, top: 36),
+            child: Text(
+              "Lista de empresas",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 25),
+            ),
+          ),
           ...companies.map(
             (company) => CompanyCard(
+              onDelete: () {},
               onTap: () => Navigator.of(context)
                   .pushNamed(CompanyDetailScreen.routeName, arguments: company),
               name: company.name,
