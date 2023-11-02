@@ -8,6 +8,7 @@ class Clients extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get company => integer().references(Companies, #id)();
   TextColumn get name => text()();
+  TextColumn get profilePicture => text().nullable()();
   BoolColumn get isActive => boolean().withDefault(const Constant(true))();
   DateTimeColumn get createdDate =>
       dateTime().withDefault(currentDateAndTime)();

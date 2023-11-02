@@ -14,14 +14,18 @@ import 'package:orion_tek_challenge/presentation/blocs/home_bloc/home_bloc.dart'
 GetIt sl = GetIt.instance;
 
 Future<void> setUpServiceLocator() async {
-  // //!Blocs
+  //! Blocs
   sl.registerFactory(() => HomeBloc(companiesRepository: sl()));
   sl.registerFactory(() => AddCompanyBloc(companiesRepository: sl()));
 
   //! Repositories
 
   sl.registerLazySingleton<CompanyRepository>(
-    () => FakeCompaniesRepository(companiesDao: sl()),
+    () => FakeCompaniesRepository(
+      companiesDao: sl(),
+      clientsDao: sl(),
+      addressesDao: sl(),
+    ),
   );
 
   //! Database
@@ -30,7 +34,7 @@ Future<void> setUpServiceLocator() async {
     db,
     dispose: (_) => db.close(),
   );
-//! Tables
+  //! Tables
   sl.registerLazySingleton<CompaniesDao>(() => CompaniesDao(db));
   sl.registerLazySingleton<ClientsDao>(() => ClientsDao(db));
   sl.registerLazySingleton<AddressesDao>(() => AddressesDao(db));

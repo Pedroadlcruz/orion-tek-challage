@@ -4,7 +4,7 @@ import 'package:orion_tek_challenge/core/extensions/forms_validatiors.dart';
 import 'package:orion_tek_challenge/core/extensions/strings_formmaters.dart';
 import 'package:orion_tek_challenge/core/widgets/alerts.dart';
 import 'package:orion_tek_challenge/core/widgets/app_btn.dart';
-import 'package:orion_tek_challenge/presentation/blocs/add_company/add_company_bloc.dart';
+import 'package:orion_tek_challenge/presentation/blocs/add_company_bloc/add_company_bloc.dart';
 import 'package:orion_tek_challenge/presentation/screens/home_screen.dart';
 
 import '../../core/constants/strings.dart';

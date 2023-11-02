@@ -320,6 +320,12 @@ class $ClientsTable extends Clients with TableInfo<$ClientsTable, Client> {
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _profilePictureMeta =
+      const VerificationMeta('profilePicture');
+  @override
+  late final GeneratedColumn<String> profilePicture = GeneratedColumn<String>(
+      'profile_picture', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _isActiveMeta =
       const VerificationMeta('isActive');
   @override
@@ -340,7 +346,7 @@ class $ClientsTable extends Clients with TableInfo<$ClientsTable, Client> {
       defaultValue: currentDateAndTime);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, company, name, isActive, createdDate];
+      [id, company, name, profilePicture, isActive, createdDate];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -365,6 +371,12 @@ class $ClientsTable extends Clients with TableInfo<$ClientsTable, Client> {
           _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
     } else if (isInserting) {
       context.missing(_nameMeta);
+    }
+    if (data.containsKey('profile_picture')) {
+      context.handle(
+          _profilePictureMeta,
+          profilePicture.isAcceptableOrUnknown(
+              data['profile_picture']!, _profilePictureMeta));
     }
     if (data.containsKey('is_active')) {
       context.handle(_isActiveMeta,
@@ -391,6 +403,8 @@ class $ClientsTable extends Clients with TableInfo<$ClientsTable, Client> {
           .read(DriftSqlType.int, data['${effectivePrefix}company'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      profilePicture: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}profile_picture']),
       isActive: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
       createdDate: attachedDatabase.typeMapping
@@ -408,12 +422,14 @@ class Client extends DataClass implements Insertable<Client> {
   final int id;
   final int company;
   final String name;
+  final String? profilePicture;
   final bool isActive;
   final DateTime createdDate;
   const Client(
       {required this.id,
       required this.company,
       required this.name,
+      this.profilePicture,
       required this.isActive,
       required this.createdDate});
   @override
@@ -422,6 +438,9 @@ class Client extends DataClass implements Insertable<Client> {
     map['id'] = Variable<int>(id);
     map['company'] = Variable<int>(company);
     map['name'] = Variable<String>(name);
+    if (!nullToAbsent || profilePicture != null) {
+      map['profile_picture'] = Variable<String>(profilePicture);
+    }
     map['is_active'] = Variable<bool>(isActive);
     map['created_date'] = Variable<DateTime>(createdDate);
     return map;
@@ -432,6 +451,9 @@ class Client extends DataClass implements Insertable<Client> {
       id: Value(id),
       company: Value(company),
       name: Value(name),
+      profilePicture: profilePicture == null && nullToAbsent
+          ? const Value.absent()
+          : Value(profilePicture),
       isActive: Value(isActive),
       createdDate: Value(createdDate),
     );
@@ -444,6 +466,7 @@ class Client extends DataClass implements Insertable<Client> {
       id: serializer.fromJson<int>(json['id']),
       company: serializer.fromJson<int>(json['company']),
       name: serializer.fromJson<String>(json['name']),
+      profilePicture: serializer.fromJson<String?>(json['profilePicture']),
       isActive: serializer.fromJson<bool>(json['isActive']),
       createdDate: serializer.fromJson<DateTime>(json['createdDate']),
     );
@@ -455,6 +478,7 @@ class Client extends DataClass implements Insertable<Client> {
       'id': serializer.toJson<int>(id),
       'company': serializer.toJson<int>(company),
       'name': serializer.toJson<String>(name),
+      'profilePicture': serializer.toJson<String?>(profilePicture),
       'isActive': serializer.toJson<bool>(isActive),
       'createdDate': serializer.toJson<DateTime>(createdDate),
     };
@@ -464,12 +488,15 @@ class Client extends DataClass implements Insertable<Client> {
           {int? id,
           int? company,
           String? name,
+          Value<String?> profilePicture = const Value.absent(),
           bool? isActive,
           DateTime? createdDate}) =>
       Client(
         id: id ?? this.id,
         company: company ?? this.company,
         name: name ?? this.name,
+        profilePicture:
+            profilePicture.present ? profilePicture.value : this.profilePicture,
         isActive: isActive ?? this.isActive,
         createdDate: createdDate ?? this.createdDate,
       );
@@ -479,6 +506,7 @@ class Client extends DataClass implements Insertable<Client> {
           ..write('id: $id, ')
           ..write('company: $company, ')
           ..write('name: $name, ')
+          ..write('profilePicture: $profilePicture, ')
           ..write('isActive: $isActive, ')
           ..write('createdDate: $createdDate')
           ..write(')'))
@@ -486,7 +514,8 @@ class Client extends DataClass implements Insertable<Client> {
   }
 
   @override
-  int get hashCode => Object.hash(id, company, name, isActive, createdDate);
+  int get hashCode =>
+      Object.hash(id, company, name, profilePicture, isActive, createdDate);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -494,6 +523,7 @@ class Client extends DataClass implements Insertable<Client> {
           other.id == this.id &&
           other.company == this.company &&
           other.name == this.name &&
+          other.profilePicture == this.profilePicture &&
           other.isActive == this.isActive &&
           other.createdDate == this.createdDate);
 }
@@ -502,12 +532,14 @@ class ClientsCompanion extends UpdateCompanion<Client> {
   final Value<int> id;
   final Value<int> company;
   final Value<String> name;
+  final Value<String?> profilePicture;
   final Value<bool> isActive;
   final Value<DateTime> createdDate;
   const ClientsCompanion({
     this.id = const Value.absent(),
     this.company = const Value.absent(),
     this.name = const Value.absent(),
+    this.profilePicture = const Value.absent(),
     this.isActive = const Value.absent(),
     this.createdDate = const Value.absent(),
   });
@@ -515,6 +547,7 @@ class ClientsCompanion extends UpdateCompanion<Client> {
     this.id = const Value.absent(),
     required int company,
     required String name,
+    this.profilePicture = const Value.absent(),
     this.isActive = const Value.absent(),
     this.createdDate = const Value.absent(),
   })  : company = Value(company),
@@ -523,6 +556,7 @@ class ClientsCompanion extends UpdateCompanion<Client> {
     Expression<int>? id,
     Expression<int>? company,
     Expression<String>? name,
+    Expression<String>? profilePicture,
     Expression<bool>? isActive,
     Expression<DateTime>? createdDate,
   }) {
@@ -530,6 +564,7 @@ class ClientsCompanion extends UpdateCompanion<Client> {
       if (id != null) 'id': id,
       if (company != null) 'company': company,
       if (name != null) 'name': name,
+      if (profilePicture != null) 'profile_picture': profilePicture,
       if (isActive != null) 'is_active': isActive,
       if (createdDate != null) 'created_date': createdDate,
     });
@@ -539,12 +574,14 @@ class ClientsCompanion extends UpdateCompanion<Client> {
       {Value<int>? id,
       Value<int>? company,
       Value<String>? name,
+      Value<String?>? profilePicture,
       Value<bool>? isActive,
       Value<DateTime>? createdDate}) {
     return ClientsCompanion(
       id: id ?? this.id,
       company: company ?? this.company,
       name: name ?? this.name,
+      profilePicture: profilePicture ?? this.profilePicture,
       isActive: isActive ?? this.isActive,
       createdDate: createdDate ?? this.createdDate,
     );
@@ -562,6 +599,9 @@ class ClientsCompanion extends UpdateCompanion<Client> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
+    if (profilePicture.present) {
+      map['profile_picture'] = Variable<String>(profilePicture.value);
+    }
     if (isActive.present) {
       map['is_active'] = Variable<bool>(isActive.value);
     }
@@ -577,6 +617,7 @@ class ClientsCompanion extends UpdateCompanion<Client> {
           ..write('id: $id, ')
           ..write('company: $company, ')
           ..write('name: $name, ')
+          ..write('profilePicture: $profilePicture, ')
           ..write('isActive: $isActive, ')
           ..write('createdDate: $createdDate')
           ..write(')'))
