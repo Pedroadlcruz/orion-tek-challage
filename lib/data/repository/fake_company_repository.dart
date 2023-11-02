@@ -53,14 +53,14 @@ class FakeCompaniesRepository implements CompanyRepository {
   }
 
   @override
-  Future<Either<AppFailure, int>> createClient(ClientParams params) async {
+  Future<Either<AppFailure, Client>> createClient(ClientParams params) async {
     try {
       //Just for simulate a server call
       await Future.delayed(const Duration(milliseconds: 200));
       final clientId =
           await clientsDao.insertClient(params.toClientsCompanion());
-
-      return Right(clientId);
+      final client = await clientsDao.getClientById(clientId);
+      return Right(client);
     } on Exception {
       return const Left(AppFailure.unexpected());
     }

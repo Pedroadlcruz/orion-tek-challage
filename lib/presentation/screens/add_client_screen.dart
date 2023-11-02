@@ -28,12 +28,17 @@ class AddClientScreen extends StatelessWidget {
               context: context,
               content: "Cliente creado exitosamente, desea agregar dirección",
               callToAction: "Agregar dirección",
-              onBack: () => Navigator.pushReplacementNamed(
-                  context, CompanyDetailScreen.routeName,
-                  arguments: company),
+              onBack: () => Navigator.of(context)
+                ..pop()
+                ..pop()
+                ..popAndPushNamed(CompanyDetailScreen.routeName,
+                    arguments: company),
+              // .pushReplacementNamed(
+              //     context, CompanyDetailScreen.routeName,
+              //     arguments: company),
               onCallToAction: () {
                 Navigator.pushNamed(context, AddAddressScreen.routeName,
-                    arguments: state.clientId);
+                    arguments: state.client);
               },
             );
           }

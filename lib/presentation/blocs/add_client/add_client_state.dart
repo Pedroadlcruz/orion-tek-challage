@@ -15,10 +15,10 @@ class AddClientLoading extends AddClientState {
 }
 
 class AddClientSuccess extends AddClientState {
-  final int clientId;
-  const AddClientSuccess(this.clientId);
+  final Client client;
+  const AddClientSuccess(this.client);
   @override
-  List<Object?> get props => [clientId];
+  List<Object?> get props => [client];
 }
 
 class AddClientFailure extends AddClientState {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orion_tek_challenge/core/errors/app_failure.dart';
+import 'package:orion_tek_challenge/core/services/local_storage/database/app_database.dart';
 
 import '../../../data/models/client_params.dart';
 import '../../../domain/company_repository.dart';
@@ -25,7 +26,7 @@ class AddClientBloc extends Bloc<AddClientEvent, AddClientState> {
     final result = await companiesRepository.createClient(event.clientData);
     result.fold(
       (e) => emit(AddClientFailure(e.message)),
-      (clientId) => emit(AddClientSuccess(clientId)),
+      (client) => emit(AddClientSuccess(client)),
     );
   }
 }

@@ -7,7 +7,7 @@ import 'package:orion_tek_challenge/data/models/client_params.dart';
 abstract class CompanyRepository {
   Future<Either<AppFailure, List<Company>>> loadCompanies();
   Future<Either<AppFailure, void>> createCompany(String name);
-  Future<Either<AppFailure, int>> createClient(ClientParams params);
+  Future<Either<AppFailure, Client>> createClient(ClientParams params);
   Future<Either<AppFailure, List<Client>>> getCompanyClients(int companyId);
   Future<Either<AppFailure, void>> createAddress(AddressParams params);
   Future<Either<AppFailure, List<Address>>> getClientsAddresses(int clienteId);
