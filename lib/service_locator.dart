@@ -10,6 +10,8 @@ import 'package:orion_tek_challenge/presentation/blocs/add_company_bloc/add_comp
 import 'package:orion_tek_challenge/presentation/blocs/company_detail/company_detail_bloc.dart';
 import 'package:orion_tek_challenge/presentation/blocs/home_bloc/home_bloc.dart';
 
+import 'presentation/blocs/client_detail/client_detail_bloc.dart';
+
 ///
 /// Service Locator
 ///
@@ -21,6 +23,7 @@ Future<void> setUpServiceLocator() async {
   sl.registerFactory(() => AddCompanyBloc(companiesRepository: sl()));
   sl.registerFactory(() => CompanyDetailBloc(companiesRepository: sl()));
   sl.registerFactory(() => AddClientBloc(companiesRepository: sl()));
+  sl.registerFactory(() => ClientDetailBloc(companiesRepository: sl()));
 
   //! Repositories
 
