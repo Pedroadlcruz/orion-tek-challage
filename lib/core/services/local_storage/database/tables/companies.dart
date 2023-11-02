@@ -17,10 +17,14 @@ class Companies extends Table {
 class CompaniesDao extends DatabaseAccessor<AppDatabase>
     with _$CompaniesDaoMixin {
   final AppDatabase db;
+  CompaniesDao(this.db) : super(db);
 
-  Future<List<Company>> getCompanies() async => select(companies).get();
+  Future<List<Company>> getCompanies() async =>
+      (select(companies)..where((company) => company.isActive.equals(true)))
+          .get();
   Future<int> insertCompany(Insertable<Company> company) async =>
       into(companies).insert(company);
-
-  CompaniesDao(this.db) : super(db);
+  Future<void> deleteCompany(int id) async =>
+      (update(companies)..where((company) => company.id.equals(id)))
+          .write(const CompaniesCompanion(isActive: Value(false)));
 }

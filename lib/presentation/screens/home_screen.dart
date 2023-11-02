@@ -68,7 +68,8 @@ class _Body extends StatelessWidget {
           ),
           ...companies.map(
             (company) => CompanyCard(
-              onDelete: () {},
+              onDelete: () =>
+                  context.read<HomeBloc>().add(DeleteCompany(company.id)),
               onTap: () => Navigator.of(context)
                   .pushNamed(CompanyDetailScreen.routeName, arguments: company),
               name: company.name,

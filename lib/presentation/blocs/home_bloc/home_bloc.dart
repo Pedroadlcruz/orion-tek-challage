@@ -16,6 +16,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required this.companiesRepository,
   }) : super(const HomeInitial()) {
     on<LoadCompanies>(_onLoadCompanies);
+    on<DeleteCompany>(_onDeleteCompany);
   }
 
   FutureOr<void> _onLoadCompanies(
@@ -24,6 +25,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     emit(const HomeLoading());
     final result = await companiesRepository.loadCompanies();
+    result.fold(
+      (e) => emit(HomeFailure(e.message)),
+      (companies) => emit(HomeSuccess(companies)),
+    );
+  }
+
+  FutureOr<void> _onDeleteCompany(
+    DeleteCompany event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(const HomeLoading());
+    final result = await companiesRepository.deleteCompany(event.id);
     result.fold(
       (e) => emit(HomeFailure(e.message)),
       (companies) => emit(HomeSuccess(companies)),

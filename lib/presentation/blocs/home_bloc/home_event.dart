@@ -12,3 +12,11 @@ class LoadCompanies extends HomeEvent {
   @override
   List<Object?> get props => [];
 }
+
+class DeleteCompany extends HomeEvent {
+  final int id;
+  const DeleteCompany(this.id);
+
+  @override
+  List<Object?> get props => [id];
+}

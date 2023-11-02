@@ -106,4 +106,18 @@ class FakeCompaniesRepository implements CompanyRepository {
       return const Left(AppFailure.unexpected());
     }
   }
+
+  @override
+  Future<Either<AppFailure, List<Company>>> deleteCompany(int id) async {
+    try {
+      //Just for simulate a server call
+      await Future.delayed(const Duration(milliseconds: 200));
+      await companiesDao.deleteCompany(id);
+
+      final companies = await companiesDao.getCompanies();
+      return Right(companies);
+    } on Exception catch (_) {
+      return const Left(AppFailure.unexpected());
+    }
+  }
 }
