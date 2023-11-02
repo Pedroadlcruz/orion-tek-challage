@@ -10,6 +10,7 @@ import 'package:orion_tek_challenge/presentation/widgets/company_card.dart';
 import 'package:orion_tek_challenge/presentation/widgets/failure_widget.dart';
 import 'package:orion_tek_challenge/service_locator.dart';
 
+import '../../core/widgets/alerts.dart';
 import '../widgets/empty_widget.dart';
 import '../widgets/loading_widget.dart';
 
@@ -68,8 +69,16 @@ class _Body extends StatelessWidget {
           ),
           ...companies.map(
             (company) => CompanyCard(
-              onDelete: () =>
-                  context.read<HomeBloc>().add(DeleteCompany(company.id)),
+              onDelete: () async {
+                await Alerts.confirmation(
+                  context: context,
+                  content: "¿Estás seguro de que deseas continuar?",
+                  onCallToAction: () {
+                    context.read<HomeBloc>().add(DeleteCompany(company.id));
+                    Navigator.pop(context);
+                  },
+                );
+              },
               onTap: () => Navigator.of(context)
                   .pushNamed(CompanyDetailScreen.routeName, arguments: company),
               name: company.name,

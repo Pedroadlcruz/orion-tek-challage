@@ -73,4 +73,37 @@ class Alerts {
           );
         });
   }
+
+  static Future<void> confirmation({
+    required BuildContext context,
+    required String content,
+    required void Function()? onCallToAction,
+  }) async {
+    await showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Icon(
+              Icons.delete_outline_sharp,
+              color: Colors.redAccent,
+              size: 60,
+            ),
+            content: Text(
+              content,
+              textAlign: TextAlign.center,
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: onCallToAction,
+                child: const Text("Si"),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text("No"),
+              ),
+            ],
+          );
+        });
+  }
 }
