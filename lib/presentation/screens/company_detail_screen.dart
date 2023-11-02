@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orion_tek_challenge/presentation/blocs/company_detail/company_detail_bloc.dart';
 import 'package:orion_tek_challenge/presentation/screens/add_client_screen.dart';
+import 'package:orion_tek_challenge/presentation/screens/client_detail_screen.dart';
 import 'package:orion_tek_challenge/presentation/widgets/failure_widget.dart';
 import 'package:orion_tek_challenge/presentation/widgets/loading_widget.dart';
 
@@ -38,7 +39,7 @@ class CompanyDetailScreen extends StatelessWidget {
                           arguments: company);
                     },
                     icon: Icons.app_blocking_outlined,
-                    message: 'Usted no tiene clientes registrados',
+                    message: '${company.name} no tiene clientes registrados',
                     callToAction: 'Agregar cliente',
                   ),
                   child: Expanded(
@@ -57,6 +58,9 @@ class CompanyDetailScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 4),
                             child: ListTile(
+                              onTap: () => Navigator.of(context).pushNamed(
+                                  ClientDetailScreen.routeName,
+                                  arguments: client),
                               shape: Border.all(color: Colors.blueGrey),
                               leading: CircleAvatar(
                                 child: Text(client.name.substring(0, 1)),
@@ -65,7 +69,7 @@ class CompanyDetailScreen extends StatelessWidget {
                               trailing: IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () {
-                                  //TODO: GO TO CLIENT DETAIL
+                                  //TODO: Delete cliente
                                 },
                               ),
                             ),

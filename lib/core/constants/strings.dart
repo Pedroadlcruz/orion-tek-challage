@@ -12,6 +12,7 @@ class Strings {
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtH6ctIDoPfhmlQreh9wC8fy65XzroD6O5Xg&usqp=CAU";
   static const addCompany = 'Crear empresa';
   static const addClient = 'Crear cliente';
+  static const clientDetail = 'Detalle de Cliente';
   static const emptyNameValidationMessage = 'Por favor, escribir su nombre';
   static const validNameValidationMessage =
       'Por favor, escribir un nombre válido';

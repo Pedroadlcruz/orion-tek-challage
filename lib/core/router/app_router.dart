@@ -13,6 +13,8 @@ import 'package:orion_tek_challenge/presentation/screens/add_company_screen.dart
 import 'package:orion_tek_challenge/presentation/screens/company_detail_screen.dart';
 import 'package:orion_tek_challenge/service_locator.dart';
 
+import '../../presentation/blocs/client_detail/client_detail_bloc.dart';
+import '../../presentation/screens/client_detail_screen.dart';
 import '../../presentation/screens/home_screen.dart';
 
 class AppRouter {
@@ -43,6 +45,12 @@ class AppRouter {
         return _buildPage(BlocProvider.value(
           value: sl<AddClientBloc>(),
           child: AddClientScreen(company: company),
+        ));
+      case ClientDetailScreen.routeName:
+        final client = settings.arguments as Client;
+        return _buildPage(BlocProvider.value(
+          value: sl<ClientDetailBloc>()..add(LoadAddresses(client.id)),
+          child: ClientDetailScreen(client: client),
         ));
       default:
         return PageRouteBuilder(
