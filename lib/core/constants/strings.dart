@@ -19,4 +19,5 @@ class Strings {
   static const tooLargeNameValidationMessage =
       'Este campo no puede tener más de 20 letras.';
   static const create = 'Crear';
+  static const addAddress = 'Crear dirección';
 }

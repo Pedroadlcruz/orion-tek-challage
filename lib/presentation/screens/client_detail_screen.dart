@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:orion_tek_challenge/presentation/screens/add_address_screen.dart';
 import 'package:orion_tek_challenge/presentation/widgets/failure_widget.dart';
 import 'package:orion_tek_challenge/presentation/widgets/loading_widget.dart';
 
@@ -33,11 +34,10 @@ class ClientDetailScreen extends StatelessWidget {
                   visible: state.addresses.isNotEmpty,
                   replacement: EmptyWidget(
                     onButtonPressed: () async {
-                      //TODO: Navigate to Add Address Screen
-                      // Navigator.pushNamed(context, AddClientScreen.routeName,
-                      //     arguments: client);
+                      Navigator.pushNamed(context, AddAddressScreen.routeName,
+                          arguments: client);
                     },
-                    icon: Icons.app_blocking_outlined,
+                    icon: Icons.location_off_outlined,
                     message: '${client.name} no tiene direcciones registrados',
                     callToAction: 'Agregar dirección',
                   ),
@@ -72,7 +72,7 @@ class ClientDetailScreen extends StatelessWidget {
                               trailing: IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () {
-                                  //TODO: GO TO CLIENT DETAIL
+                                  //TODO: DELETE CLIENT
                                 },
                               ),
                             ),
@@ -93,9 +93,8 @@ class ClientDetailScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //TODO: NAVIGATE TO ADD ADDRESS
-          // Navigator.pushNamed(context, AddClientScreen.routeName,
-          //   arguments: client);
+          Navigator.pushNamed(context, AddAddressScreen.routeName,
+              arguments: client);
         },
         child: const Icon(Icons.add_location_outlined),
       ),

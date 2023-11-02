@@ -6,6 +6,7 @@ import 'package:orion_tek_challenge/core/widgets/alerts.dart';
 import 'package:orion_tek_challenge/core/widgets/app_btn.dart';
 import 'package:orion_tek_challenge/data/models/client_params.dart';
 import 'package:orion_tek_challenge/presentation/blocs/add_client/add_client_bloc.dart';
+import 'package:orion_tek_challenge/presentation/screens/add_address_screen.dart';
 import 'package:orion_tek_challenge/presentation/screens/company_detail_screen.dart';
 
 import '../../core/constants/strings.dart';
@@ -27,11 +28,12 @@ class AddClientScreen extends StatelessWidget {
               context: context,
               content: "Cliente creado exitosamente, desea agregar dirección",
               callToAction: "Agregar dirección",
-              onBack: () => Navigator.pushNamedAndRemoveUntil(
-                  context, CompanyDetailScreen.routeName, (route) => false,
+              onBack: () => Navigator.pushReplacementNamed(
+                  context, CompanyDetailScreen.routeName,
                   arguments: company),
               onCallToAction: () {
-                //TODO: GO TO ADD CLIENT ADDRESS
+                Navigator.pushNamed(context, AddAddressScreen.routeName,
+                    arguments: state.clientId);
               },
             );
           }
