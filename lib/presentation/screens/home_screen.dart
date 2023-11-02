@@ -7,7 +7,11 @@ import 'package:orion_tek_challenge/presentation/blocs/home_bloc/home_bloc.dart'
 import 'package:orion_tek_challenge/presentation/screens/add_company_screen.dart';
 import 'package:orion_tek_challenge/presentation/screens/company_detail_screen.dart';
 import 'package:orion_tek_challenge/presentation/widgets/company_card.dart';
+import 'package:orion_tek_challenge/presentation/widgets/failure_widget.dart';
 import 'package:orion_tek_challenge/service_locator.dart';
+
+import '../widgets/empty_widget.dart';
+import '../widgets/loading_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -21,14 +25,9 @@ class HomeScreen extends StatelessWidget {
           if (state is HomeSuccess) {
             return _Body(state.companies);
           } else if (state is HomeFailure) {
-            return Center(
-              child: Text(
-                state.message,
-                style: const TextStyle(color: Colors.red),
-              ),
-            );
+            return FailureWidget(message: state.message);
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingWidget();
           }
         },
       ),
@@ -48,79 +47,38 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      if (companies.isEmpty) {
-        return const _NoCompaniesWidget();
-      } else {
-        return ListView(
-          children: [
-            ...companies.map(
-              (company) => CompanyCard(
-                onTap: () => Navigator.of(context).pushNamed(
-                    CompanyDetailScreen.routeName,
-                    arguments: company),
-                name: company.name,
-                logo: company.logo ??
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtH6ctIDoPfhmlQreh9wC8fy65XzroD6O5Xg&usqp=CAU",
-              ),
+    return Visibility(
+      visible: companies.isNotEmpty,
+      replacement: EmptyWidget(
+        onButtonPressed: () async {
+          Navigator.pushNamed(context, AddCompanyScreen.routeName);
+        },
+        icon: Icons.theater_comedy_sharp,
+        message: 'Usted no tiene empresa registrada',
+        callToAction: 'Agregar empresa',
+      ),
+      child: ListView(
+        children: [
+          ...companies.map(
+            (company) => CompanyCard(
+              onTap: () => Navigator.of(context)
+                  .pushNamed(CompanyDetailScreen.routeName, arguments: company),
+              name: company.name,
+              logo: company.logo ??
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtH6ctIDoPfhmlQreh9wC8fy65XzroD6O5Xg&usqp=CAU",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0)
-                  .copyWith(top: 30, bottom: 80),
-              child: ElevatedButton(
-                onPressed: () async {
-                  Navigator.pushNamed(context, AddCompanyScreen.routeName);
-                },
-                child: const Text('Agregar empresa'),
-              ),
-            ),
-          ],
-        );
-      }
-    });
-  }
-}
-
-class _NoCompaniesWidget extends StatelessWidget {
-  const _NoCompaniesWidget();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: Icon(
-                  Icons.theater_comedy_sharp,
-                  size: 50,
-                ),
-              ),
-              const Text(
-                'Usted no tiene empresa registrada',
-                style: TextStyle(fontSize: 16),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32.0)
-                    .copyWith(top: 30),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    // final companiesDao = sl<CompaniesDao>();
-                    // await companiesDao.insertCompany(const CompaniesCompanion(
-                    //   name: drift.Value("Male"),
-                    // ));
-                    Navigator.pushNamed(context, AddCompanyScreen.routeName);
-                  },
-                  child: const Text('Agregar empresa'),
-                ),
-              ),
-            ],
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0)
+                .copyWith(top: 30, bottom: 80),
+            child: ElevatedButton(
+              onPressed: () async {
+                Navigator.pushNamed(context, AddCompanyScreen.routeName);
+              },
+              child: const Text('Agregar empresa'),
+            ),
+          ),
+        ],
       ),
     );
   }
