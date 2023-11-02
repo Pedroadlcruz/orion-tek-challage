@@ -53,19 +53,14 @@ class FakeCompaniesRepository implements CompanyRepository {
   }
 
   @override
-  Future<Either<AppFailure, void>> createClient(ClientParams params) async {
+  Future<Either<AppFailure, int>> createClient(ClientParams params) async {
     try {
       //Just for simulate a server call
       await Future.delayed(const Duration(milliseconds: 200));
       final clientId =
           await clientsDao.insertClient(params.toClientsCompanion());
-      params.addresses.map((address) async {
-        await addressesDao.insertAddress(
-          address.toAddressesCompanion(clientId),
-        );
-      });
-      // ignore: void_checks
-      return const Right(Void);
+
+      return Right(clientId);
     } on Exception {
       return const Left(AppFailure.unexpected());
     }
