@@ -11,5 +11,5 @@ class AddCompany extends AddCompanyEvent {
   const AddCompany(this.name);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [name];
 }
