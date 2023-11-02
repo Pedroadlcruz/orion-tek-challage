@@ -38,4 +38,39 @@ class Alerts {
           );
         });
   }
+
+  static Future<Future> successExtraAction({
+    required BuildContext context,
+    required String content,
+    required String callToAction,
+    required void Function()? onCallToAction,
+    required void Function()? onBack,
+  }) async {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Icon(
+              Icons.check_circle_outline,
+              color: Colors.greenAccent,
+              size: 60,
+            ),
+            content: Text(
+              content,
+              textAlign: TextAlign.center,
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: onBack,
+                child: const Text("Volver"),
+              ),
+              TextButton(
+                onPressed: onCallToAction,
+                child: Text(callToAction),
+              ),
+            ],
+          );
+        });
+  }
 }
