@@ -20,11 +20,17 @@ class ClientsDao extends DatabaseAccessor<AppDatabase> with _$ClientsDaoMixin {
   ClientsDao(this.db) : super(db);
 
   Future<List<Client>> getCompanyClients(int companyId) async =>
-      (select(clients)..where((client) => client.company.equals(companyId)))
+      (select(clients)
+            ..where((client) => client.company.equals(companyId))
+            ..where((client) => client.isActive.equals(true)))
           .get();
   Future<int> insertClient(Insertable<Client> client) async =>
       into(clients).insert(client);
 
   Future<Client> getClientById(int id) async =>
       (select(clients)..where((client) => client.id.equals(id))).getSingle();
+
+  Future<void> deleteClient(int id) async =>
+      (update(clients)..where((client) => client.id.equals(id)))
+          .write(const ClientsCompanion(isActive: Value(false)));
 }

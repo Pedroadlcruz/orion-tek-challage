@@ -15,12 +15,25 @@ class CompanyDetailBloc extends Bloc<CompanyDetailEvent, CompanyDetailState> {
   CompanyDetailBloc({required this.companiesRepository})
       : super(const CompanyDetailInitial()) {
     on<LoadClients>(_onLoadClients);
+    on<DeleteClient>(_onDeleteClient);
   }
 
   FutureOr<void> _onLoadClients(
       LoadClients event, Emitter<CompanyDetailState> emit) async {
     emit(const CompanyDetailLoading());
     final result = await companiesRepository.getCompanyClients(event.companyId);
+    result.fold(
+      (e) => emit(CompanyDetailFailure(e.message)),
+      (clients) => emit(CompanyDetailSuccess(clients)),
+    );
+  }
+
+  FutureOr<void> _onDeleteClient(
+    DeleteClient event,
+    Emitter<CompanyDetailState> emit,
+  ) async {
+    emit(const CompanyDetailLoading());
+    final result = await companiesRepository.deleteClient(event.client);
     result.fold(
       (e) => emit(CompanyDetailFailure(e.message)),
       (clients) => emit(CompanyDetailSuccess(clients)),

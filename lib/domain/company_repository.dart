@@ -8,8 +8,11 @@ abstract class CompanyRepository {
   Future<Either<AppFailure, List<Company>>> loadCompanies();
   Future<Either<AppFailure, void>> createCompany(String name);
   Future<Either<AppFailure, List<Company>>> deleteCompany(int id);
+
   Future<Either<AppFailure, Client>> createClient(ClientParams params);
   Future<Either<AppFailure, List<Client>>> getCompanyClients(int companyId);
+  Future<Either<AppFailure, List<Client>>> deleteClient(Client client);
+
   Future<Either<AppFailure, void>> createAddress(AddressParams params);
   Future<Either<AppFailure, List<Address>>> getClientsAddresses(int clienteId);
 }

@@ -8,6 +8,7 @@ import 'package:orion_tek_challenge/presentation/widgets/loading_widget.dart';
 
 import '../../core/constants/strings.dart';
 import '../../core/services/local_storage/database/app_database.dart';
+import '../../core/widgets/alerts.dart';
 import '../widgets/empty_widget.dart';
 
 class CompanyDetailScreen extends StatelessWidget {
@@ -68,8 +69,18 @@ class CompanyDetailScreen extends StatelessWidget {
                               title: Text(client.name),
                               trailing: IconButton(
                                 icon: const Icon(Icons.delete),
-                                onPressed: () {
-                                  //TODO: Delete cliente
+                                onPressed: () async {
+                                  await Alerts.confirmation(
+                                    context: context,
+                                    content:
+                                        "¿Estás seguro de que deseas continuar?",
+                                    onCallToAction: () {
+                                      context
+                                          .read<CompanyDetailBloc>()
+                                          .add(DeleteClient(client));
+                                      Navigator.pop(context);
+                                    },
+                                  );
                                 },
                               ),
                             ),

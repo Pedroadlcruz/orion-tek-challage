@@ -13,3 +13,11 @@ class LoadClients extends CompanyDetailEvent {
   @override
   List<Object?> get props => [companyId];
 }
+
+class DeleteClient extends CompanyDetailEvent {
+  final Client client;
+  const DeleteClient(this.client);
+
+  @override
+  List<Object?> get props => [client];
+}
