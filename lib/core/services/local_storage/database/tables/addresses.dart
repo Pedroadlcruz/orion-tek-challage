@@ -27,8 +27,13 @@ class AddressesDao extends DatabaseAccessor<AppDatabase>
   AddressesDao(this.db) : super(db);
 
   Future<List<Address>> getClientAddresses(int clientId) async =>
-      (select(addresses)..where((address) => address.client.equals(clientId)))
+      (select(addresses)
+            ..where((address) => address.client.equals(clientId))
+            ..where((address) => address.isActive.equals(true)))
           .get();
   Future<int> insertAddress(Insertable<Address> address) async =>
       into(addresses).insert(address);
+  Future<void> deleteAddress(int id) async =>
+      (update(addresses)..where((address) => address.id.equals(id)))
+          .write(const AddressesCompanion(isActive: Value(false)));
 }

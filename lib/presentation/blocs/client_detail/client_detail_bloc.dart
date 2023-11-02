@@ -15,6 +15,7 @@ class ClientDetailBloc extends Bloc<ClientDetailEvent, ClientDetailState> {
   ClientDetailBloc({required this.companiesRepository})
       : super(const ClientDetailInitial()) {
     on<LoadAddresses>(_onLoadAddresses);
+    on<DeleteAddress>(_onDeleteAddress);
   }
 
   FutureOr<void> _onLoadAddresses(
@@ -24,6 +25,18 @@ class ClientDetailBloc extends Bloc<ClientDetailEvent, ClientDetailState> {
     emit(const ClientDetailLoading());
     final result =
         await companiesRepository.getClientsAddresses(event.clientId);
+    result.fold(
+      (e) => emit(ClientDetailFailure(e.message)),
+      (address) => emit(ClientDetailSuccess(address)),
+    );
+  }
+
+  FutureOr<void> _onDeleteAddress(
+    DeleteAddress event,
+    Emitter<ClientDetailState> emit,
+  ) async {
+    emit(const ClientDetailLoading());
+    final result = await companiesRepository.deleteAddress(event.address);
     result.fold(
       (e) => emit(ClientDetailFailure(e.message)),
       (address) => emit(ClientDetailSuccess(address)),

@@ -15,4 +15,5 @@ abstract class CompanyRepository {
 
   Future<Either<AppFailure, void>> createAddress(AddressParams params);
   Future<Either<AppFailure, List<Address>>> getClientsAddresses(int clienteId);
+  Future<Either<AppFailure, List<Address>>> deleteAddress(Address address);
 }

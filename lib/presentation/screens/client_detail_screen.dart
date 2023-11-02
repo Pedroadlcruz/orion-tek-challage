@@ -6,6 +6,7 @@ import 'package:orion_tek_challenge/presentation/widgets/loading_widget.dart';
 
 import '../../core/constants/strings.dart';
 import '../../core/services/local_storage/database/app_database.dart';
+import '../../core/widgets/alerts.dart';
 import '../blocs/client_detail/client_detail_bloc.dart';
 import '../widgets/empty_widget.dart';
 
@@ -71,8 +72,18 @@ class ClientDetailScreen extends StatelessWidget {
                               ),
                               trailing: IconButton(
                                 icon: const Icon(Icons.delete),
-                                onPressed: () {
-                                  //TODO: DELETE CLIENT
+                                onPressed: () async {
+                                  await Alerts.confirmation(
+                                    context: context,
+                                    content:
+                                        "¿Estás seguro de que deseas continuar?",
+                                    onCallToAction: () {
+                                      context
+                                          .read<ClientDetailBloc>()
+                                          .add(DeleteAddress(address));
+                                      Navigator.pop(context);
+                                    },
+                                  );
                                 },
                               ),
                             ),

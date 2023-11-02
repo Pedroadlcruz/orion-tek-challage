@@ -13,3 +13,11 @@ class LoadAddresses extends ClientDetailEvent {
   @override
   List<Object?> get props => [clientId];
 }
+
+class DeleteAddress extends ClientDetailEvent {
+  final Address address;
+  const DeleteAddress(this.address);
+
+  @override
+  List<Object?> get props => [address];
+}
