@@ -34,7 +34,6 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => DriftDbViewer(sl<AppDatabase>()))),
-        tooltip: 'Increment',
         child: const Icon(Icons.dashboard),
       ),
     );
@@ -54,8 +53,8 @@ class _Body extends StatelessWidget {
           Navigator.pushNamed(context, AddCompanyScreen.routeName);
         },
         icon: Icons.theater_comedy_sharp,
-        message: 'Usted no tiene empresa registrada',
-        callToAction: 'Agregar empresa',
+        message: Strings.emptyCompanyMessage,
+        callToAction: Strings.emptyCompanyCallToAction,
       ),
       child: ListView(
         children: [
@@ -64,8 +63,7 @@ class _Body extends StatelessWidget {
               onTap: () => Navigator.of(context)
                   .pushNamed(CompanyDetailScreen.routeName, arguments: company),
               name: company.name,
-              logo: company.logo ??
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtH6ctIDoPfhmlQreh9wC8fy65XzroD6O5Xg&usqp=CAU",
+              logo: company.logo ?? Strings.defaultLogo,
             ),
           ),
           Padding(
@@ -75,7 +73,7 @@ class _Body extends StatelessWidget {
               onPressed: () async {
                 Navigator.pushNamed(context, AddCompanyScreen.routeName);
               },
-              child: const Text('Agregar empresa'),
+              child: const Text(Strings.emptyCompanyCallToAction),
             ),
           ),
         ],
