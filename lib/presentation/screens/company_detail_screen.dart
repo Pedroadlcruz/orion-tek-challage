@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orion_tek_challenge/presentation/blocs/company_detail/company_detail_bloc.dart';
+import 'package:orion_tek_challenge/presentation/screens/add_client_screen.dart';
 import 'package:orion_tek_challenge/presentation/widgets/failure_widget.dart';
 import 'package:orion_tek_challenge/presentation/widgets/loading_widget.dart';
 
@@ -33,34 +34,45 @@ class CompanyDetailScreen extends StatelessWidget {
                   visible: state.clients.isNotEmpty,
                   replacement: EmptyWidget(
                     onButtonPressed: () async {
-                      // Navigator.pushNamed(context, AddCompanyScreen.routeName);
+                      Navigator.pushNamed(context, AddClientScreen.routeName,
+                          arguments: company);
                     },
                     icon: Icons.app_blocking_outlined,
                     message: 'Usted no tiene clientes registrados',
                     callToAction: 'Agregar cliente',
                   ),
-                  child: ListView(
-                    children: const [
-                      // ...companies.map(
-                      //   (company) => CompanyCard(
-                      //     onTap: () => Navigator.of(context)
-                      //         .pushNamed(CompanyDetailScreen.routeName, arguments: company),
-                      //     name: company.name,
-                      //     logo: company.logo ??
-                      //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtH6ctIDoPfhmlQreh9wC8fy65XzroD6O5Xg&usqp=CAU",
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 32.0)
-                      //       .copyWith(top: 30, bottom: 80),
-                      //   child: ElevatedButton(
-                      //     onPressed: () async {
-                      //       Navigator.pushNamed(context, AddCompanyScreen.routeName);
-                      //     },
-                      //     child: const Text('Agregar empresa'),
-                      //   ),
-                      // ),
-                    ],
+                  child: Expanded(
+                    child: ListView(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            "Lista de clientes",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                        ...state.clients.map(
+                          (client) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 4),
+                            child: ListTile(
+                              shape: Border.all(color: Colors.blueGrey),
+                              leading: CircleAvatar(
+                                child: Text(client.name.substring(0, 1)),
+                              ),
+                              title: Text(client.name),
+                              trailing: IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  //TODO: GO TO CLIENT DETAIL
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               } else if (state is CompanyDetailFailure) {
@@ -73,7 +85,8 @@ class CompanyDetailScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () => Navigator.pushNamed(context, AddClientScreen.routeName,
+            arguments: company),
         child: const Icon(Icons.add_reaction_outlined),
       ),
     );
