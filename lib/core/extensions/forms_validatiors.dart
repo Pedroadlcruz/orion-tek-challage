@@ -9,6 +9,8 @@ extension FormValidatorsExt on String {
     }
     if (length <= 2) {
       return Strings.validNameValidationMessage;
+    } else if (length >= 20) {
+      return Strings.tooLargeNameValidationMessage;
     } else {
       return null;
     }

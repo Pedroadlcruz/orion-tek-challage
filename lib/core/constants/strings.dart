@@ -16,5 +16,7 @@ class Strings {
   static const emptyNameValidationMessage = 'Por favor, escribir su nombre';
   static const validNameValidationMessage =
       'Por favor, escribir un nombre válido';
+  static const tooLargeNameValidationMessage =
+      'Este campo no puede tener más de 20 letras.';
   static const create = 'Crear';
 }
