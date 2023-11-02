@@ -10,17 +10,17 @@ class AddAddressInitial extends AddAddressState {
   const AddAddressInitial();
 }
 
-class AddClientLoading extends AddAddressState {
-  const AddClientLoading();
+class AddAddressLoading extends AddAddressState {
+  const AddAddressLoading();
 }
 
-class AddClientSuccess extends AddAddressState {
-  const AddClientSuccess();
+class AddAddressSuccess extends AddAddressState {
+  const AddAddressSuccess();
 }
 
-class AddClientFailure extends AddAddressState {
+class AddAddressFailure extends AddAddressState {
   final String message;
-  const AddClientFailure(this.message);
+  const AddAddressFailure(this.message);
   @override
   List<Object?> get props => [message];
 }

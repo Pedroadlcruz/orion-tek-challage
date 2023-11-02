@@ -16,16 +16,16 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
       : super(const AddAddressInitial()) {
     on<CreateAddress>(_onCreateAddress);
   }
-
+  bool get isLoading => state == const AddAddressLoading();
   FutureOr<void> _onCreateAddress(
     CreateAddress event,
     Emitter<AddAddressState> emit,
   ) async {
-    emit(const AddClientLoading());
+    emit(const AddAddressLoading());
     final result = await companiesRepository.createAddress(event.addressData);
     result.fold(
-      (e) => emit(AddClientFailure(e.message)),
-      (_) => emit(const AddClientSuccess()),
+      (e) => emit(AddAddressFailure(e.message)),
+      (_) => emit(const AddAddressSuccess()),
     );
   }
 }
