@@ -1,6 +1,7 @@
 class Strings {
   static const appName = 'Orion App';
   static const companies = 'Empresas';
+  static const companyDetail = 'Detalle de Empresa';
   static const unexpectedFailure = 'Ha ocurrido un error inesperado.';
   static const nameDuplicationFailure =
       'Este nombre de empresa ya fue registrado';

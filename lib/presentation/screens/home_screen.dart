@@ -5,6 +5,7 @@ import 'package:orion_tek_challenge/core/constants/strings.dart';
 import 'package:orion_tek_challenge/core/services/local_storage/database/app_database.dart';
 import 'package:orion_tek_challenge/presentation/blocs/home_bloc/home_bloc.dart';
 import 'package:orion_tek_challenge/presentation/screens/add_company_screen.dart';
+import 'package:orion_tek_challenge/presentation/screens/company_detail_screen.dart';
 import 'package:orion_tek_challenge/presentation/widgets/company_card.dart';
 import 'package:orion_tek_challenge/service_locator.dart';
 
@@ -55,6 +56,9 @@ class _Body extends StatelessWidget {
           children: [
             ...companies.map(
               (company) => CompanyCard(
+                onTap: () => Navigator.of(context).pushNamed(
+                    CompanyDetailScreen.routeName,
+                    arguments: company),
                 name: company.name,
                 logo: company.logo ??
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtH6ctIDoPfhmlQreh9wC8fy65XzroD6O5Xg&usqp=CAU",
